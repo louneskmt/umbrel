@@ -1,0 +1,33 @@
+version: "3.7"
+
+x-logging:
+  &default-logging
+  driver: journald
+  options:
+    tag: "umbrel-app {{.Name}}"
+
+services:
+  web:
+    image: "louneskmt/lnd-admin:v0.10.12"
+    logging: *default-logging
+    restart: on-failure
+    stop_grace_period: 1m
+    user: "1000:1000"
+    environment:
+        HOME: "/data"
+        LND_ADMIN_PORT: $APP_LND_ADMIN_PORT
+        LND_ADMIN_LOGIN_PASSWORD: moneyprintergobrrr
+        LND_ADMIN_COIN: BTC
+        LND_ADMIN_RPC_HOST: $BITCOIN_IP
+        LND_ADMIN_RPC_PORT: $BITCOIN_RPC_PORT
+        LND_ADMIN_ADMIN_MACAROON_FILEPATH: /lnd/data/chain/bitcoin/$BITCOIN_NETWORK/admin.macaroon
+        LND_ADMIN_TLS_CERT_FILEPATH: /lnd/tls.cert
+    volumes:
+      - ${APP_DATA_DIR}/data:/data/.lnd-admin
+      - ${LND_DATA_DIR}:/lnd:ro
+    ports:
+      - "$APP_LND_ADMIN_PORT:$APP_LND_ADMIN_PORT"
+    networks:
+       default:
+         ipv4_address: $APP_LND_ADMIN_IP
+

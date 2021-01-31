@@ -61,4 +61,8 @@ HiddenServicePort 80 <app-specter-desktop-ip>:<app-specter-desktop-port>
 HiddenServiceDir /var/lib/tor/app-btcpay-server
 HiddenServicePort 80 <app-btcpay-server-ip>:<app-btcpay-server-port>
 
+# btcpay-server Hidden Service
+HiddenServiceDir /var/lib/tor/app-lnd-admin
+HiddenServicePort 80 <app-lnd-admin-ip>:<app-lnd-admin-port>
+
 HashedControlPassword <password>
