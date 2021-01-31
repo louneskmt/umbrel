@@ -18,7 +18,7 @@ services:
         LND_ADMIN_PORT: $APP_LND_ADMIN_PORT
         LND_ADMIN_LOGIN_PASSWORD: moneyprintergobrrr
         LND_ADMIN_COIN: BTC
-        LND_ADMIN_RPC_HOST: $BITCOIN_IP
+        LND_ADMIN_RPC_HOST: $LND_IP
         LND_ADMIN_RPC_PORT: $LND_GRPC_PORT
         LND_ADMIN_ADMIN_MACAROON_FILEPATH: /lnd/data/chain/bitcoin/$BITCOIN_NETWORK/admin.macaroon
         LND_ADMIN_TLS_CERT_FILEPATH: /lnd/tls.cert
