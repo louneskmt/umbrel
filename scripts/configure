@@ -156,6 +156,12 @@ APP_SAMOURAI_SERVER_WHIRLPOOL_IP="10.21.21.23"
 APP_SAMOURAI_SERVER_WHIRLPOOL_PORT="8898"
 APP_SAMOURAI_SERVER_DB_IP="10.21.21.24"
 APP_SAMOURAI_SERVER_NODE_IP="10.21.21.25"
+APP_ION_BITCOIN_IP="10.21.21.26"
+APP_ION_BITCOIN_PORT="3009"
+APP_ION_CORE_IP="10.21.21.27"
+APP_ION_CORE_PORT="3010"
+APP_ION_MONGO_IP="10.21.21.28"
+APP_ION_IPFS_IP="10.21.21.29"
 
 # Generate RPC credentials
 if [[ -z ${BITCOIN_RPC_USER+x} ]] || [[ -z ${BITCOIN_RPC_PASS+x} ]] || [[ -z ${BITCOIN_RPC_AUTH+x} ]]; then
@@ -317,6 +323,12 @@ for template in "${NGINX_CONF_FILE}" "${BITCOIN_CONF_FILE}" "${LND_CONF_FILE}" "
   sed -i "s/<app-samourai-server-whirlpool-port>/${APP_SAMOURAI_SERVER_WHIRLPOOL_PORT}/g" "${template}"
   sed -i "s/<app-samourai-server-db-ip>/${APP_SAMOURAI_SERVER_DB_IP}/g" "${template}"
   sed -i "s/<app-samourai-server-node-ip>/${APP_SAMOURAI_SERVER_NODE_IP}/g" "${template}"
+  sed -i "s/<app-ion-bitcoin-ip>/${APP_ION_BITCOIN_IP}/g" "${template}"
+  sed -i "s/<app-ion-bitcoin-port>/${APP_ION_BITCOIN_PORT}/g" "${template}"
+  sed -i "s/<app-ion-core-ip>/${APP_ION_CORE_IP}/g" "${template}"
+  sed -i "s/<app-ion-core-port>/${APP_ION_CORE_PORT}/g" "${template}"
+  sed -i "s/<app-ion-mongo-ip>/${APP_ION_MONGO_IP}/g" "${template}"
+  sed -i "s/<app-ion-ipfs-ip>/${APP_ION_IPFS_IP}/g" "${template}"
 done
 
 
