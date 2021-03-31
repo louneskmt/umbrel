@@ -1,0 +1,11 @@
+{
+  "batchingIntervalInSeconds": 600,
+  "blockchainServiceUri": "http://<bitcoin-ip>:<bitcoin-rpc-port>",
+  "databaseName": "ion-testnet-core",
+  "didMethodName": "ion:test",
+  "ipfsHttpApiEndpointUri": "http://<app-ion-ipfs-ip>:5001",
+  "maxConcurrentDownloads": 20,
+  "mongoDbConnectionString": "mongodb://<app-ion-mongo-ip>:27017/",
+  "observingIntervalInSeconds": 60,
+  "port": "<app-ion-core-port>"
+}

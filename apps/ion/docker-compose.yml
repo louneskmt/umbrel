@@ -1,0 +1,65 @@
+version: "3.7"
+
+x-logging:
+  &default-logging
+  driver: journald
+  options:
+    tag: "umbrel-app {{.Name}}"
+
+services:
+  db:
+    image: mongo:3.6.23-xenial
+    logging: *default-logging
+    restart: on-failure
+    stop_grace_period: 1m
+    volumes:
+      - ${APP_DATA_DIR}/mongo:/data/db
+    networks:
+      default:
+        ipv4_address: $APP_ION_MONGO_IP
+
+  ipfs:
+    image: ipfs/go-ipfs:v0.8.0
+    logging: *default-logging
+    restart: on-failure
+    stop_grace_period: 1m
+    volumes:
+      - ${APP_DATA_DIR}/ipfs:/data/ipfs
+    environment:
+      IPFS_PATH: /data/ipfs
+    networks:
+      default:
+        ipv4_address: $APP_ION_IPFS_IP
+
+  core:
+    image: louneskmt/ion-core:v1.0.1-test
+    logging: *default-logging
+    restart: on-failure
+    stop_grace_period: 1m
+    volumes:
+      - ${APP_DATA_DIR}/config:/data/config
+    ports:
+      - "$APP_ION_CORE_PORT:$APP_ION_CORE_PORT"
+    environment:
+      ION_CORE_CONFIG_FILE_PATH: /data/config/${BITCOIN_NETWORK}-core-docker-config.json
+      ION_CORE_VERSIONING_CONFIG_FILE_PATH: /data/config/${BITCOIN_NETWORK}-core-versioning.json
+    networks:
+      default:
+        ipv4_address: $APP_ION_CORE_IP
+    
+  bitcoin:
+    image: louneskmt/ion-bitcoin:v1.0.1-test
+    logging: *default-logging
+    restart: on-failure
+    stop_grace_period: 1m
+    volumes:
+      - ${APP_DATA_DIR}/config:/data/config
+      - ${BITCOIN_DATA_DIR}:/data/.bitcoin:ro
+    ports:
+      - "$APP_ION_BITCOIN_PORT:$APP_ION_BITCOIN_PORT"
+    environment:
+      ION_BITCOIN_CONFIG_FILE_PATH: /data/config/${BITCOIN_NETWORK}-bitcoin-docker-config.json
+      ION_BITCOIN_VERSIONING_CONFIG_FILE_PATH: /data/config/${BITCOIN_NETWORK}-bitcoin-versioning.json
+    networks:
+      default:
+        ipv4_address: $APP_ION_BITCOIN_IP

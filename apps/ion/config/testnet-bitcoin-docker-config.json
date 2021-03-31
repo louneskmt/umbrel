@@ -1,0 +1,20 @@
+{
+  "bitcoinDataDirectory": "/data/.bitcoin",
+  "bitcoinFeeSpendingCutoffPeriodInBlocks": 1,
+  "bitcoinFeeSpendingCutoff": 0.001,
+  "bitcoinPeerUri": "http://<bitcoin-ip>:<bitcoin-rpc-port>",
+  "bitcoinRpcUsername": "<bitcoin-rpc-user>",
+  "bitcoinRpcPassword": "<bitcoin-rpc-pass>",
+  "bitcoinWalletOrImportString": "[FILL THIS IN!]",
+  "databaseName": "ion-testnet-bitcoin",
+  "genesisBlockNumber": 1900000,
+  "mongoDbConnectionString": "mongodb://<app-ion-mongo-ip>:27017/",
+  "port": "<app-ion-bitcoin-port>",
+  "sidetreeTransactionFeeMarkupPercentage": 1,
+  "sidetreeTransactionPrefix": "ion:",
+  "transactionPollPeriodInSeconds": 60,
+  "valueTimeLockUpdateEnabled": false,
+  "valueTimeLockAmountInBitcoins": 0,
+  "valueTimeLockPollPeriodInSeconds": 600,
+  "valueTimeLockTransactionFeesAmountInBitcoins": 0.0001
+}
