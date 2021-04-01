@@ -1,6 +1,6 @@
 {
   "batchingIntervalInSeconds": 600,
-  "blockchainServiceUri": "http://<bitcoin-ip>:<bitcoin-rpc-port>",
+  "blockchainServiceUri": "http://<app-ion-bitcoin-ip>:<app-ion-bitcoin-port>",
   "databaseName": "ion-mainnet-core",
   "didMethodName": "ion",
   "ipfsHttpApiEndpointUri": "http://<app-ion-ipfs-ip>:5001",
