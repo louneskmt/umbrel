@@ -97,12 +97,15 @@ ENV_FILE="./templates/.env"
 ############ Generate configuration variables ############
 ##########################################################
 
+# Temporary variables for external configuration
+BIND_ADDRESS_TMP=${BIND_ADDRESS:-}
+
 # Load existing credentials if we have some
 [[ -f "./.env" ]] && source "./.env"
 [[ ! -z ${PREV_ENV_FILE+x} ]] && [[ -f "${PREV_ENV_FILE}" ]] && source "${PREV_ENV_FILE}"
 
 # Umbrel
-BIND_ADDRESS="${BIND_ADDRESS:-0.0.0.0}"
+BIND_ADDRESS="${BIND_ADDRESS_TMP:-${BIND_ADDRESS:-0.0.0.0}}"
 NETWORK_IP="10.21.21.0"
 GATEWAY_IP="10.21.21.1"
 NGINX_IP="10.21.21.2"
