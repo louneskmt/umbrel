@@ -9,7 +9,7 @@ services:
       SERVER_SSR_URL: http://$APP_AMBOSS_NEST_IP:$APP_AMBOSS_NEST_PORT/graphql
       SERVER_URL: http://umbrel.local:$APP_AMBOSS_NEST_PORT/graphql
     ports:
-      - "$APP_AMBOSS_PORT:$APP_AMBOSS_PORT"
+      - "$APP_AMBOSS_PORT:3000"
     depends_on:
       - amboss-nest
     networks:
@@ -23,17 +23,17 @@ services:
     environment:
       REDIS_HOST: $APP_AMBOSS_REDIS_IP
       POSTGRES_HOST: $APP_AMBOSS_POSTGRES_IP
-      AMBOSS_HOST: http://$APP_AMBOSS_IP
+      AMBOSS_HOST: http://umbrel.local
       AMBOSS_PORT: $APP_AMBOSS_PORT
     ports:
-      - "$APP_AMBOSS_NEST_PORT:$APP_AMBOSS_NEST_PORT"
+      - "$APP_AMBOSS_NEST_PORT:4000"
     depends_on:
       - redis
       - postgres
     networks:
       default:
         ipv4_address: $APP_AMBOSS_NEST_IP
-        
+
   postgres:
     image: postgres:9.6.20
     restart: on-failure
