@@ -1,0 +1,58 @@
+version: "3.7"
+
+services:
+  amboss-web:
+    image: amboss/amboss-web:0.0.5
+    restart: on-failure
+    stop_grace_period: 1m
+    environment:
+      SERVER_SSR_URL: http://$APP_AMBOSS_NEST_IP:$APP_AMBOSS_NEST_PORT/graphql
+      SERVER_URL: http://umbrel.local:$APP_AMBOSS_NEST_PORT/graphql
+    ports:
+      - "$APP_AMBOSS_PORT:$APP_AMBOSS_PORT"
+    depends_on:
+      - amboss-nest
+    networks:
+      default:
+        ipv4_address: $APP_AMBOSS_IP
+
+  amboss-nest:
+    image: amboss/amboss-nest:0.0.5
+    restart: on-failure
+    stop_grace_period: 1m
+    environment:
+      REDIS_HOST: $APP_AMBOSS_REDIS_IP
+      POSTGRES_HOST: $APP_AMBOSS_POSTGRES_IP
+      AMBOSS_HOST: http://$APP_AMBOSS_IP
+      AMBOSS_PORT: $APP_AMBOSS_PORT
+    ports:
+      - "$APP_AMBOSS_NEST_PORT:$APP_AMBOSS_NEST_PORT"
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      default:
+        ipv4_address: $APP_AMBOSS_NEST_IP
+        
+  postgres:
+    image: postgres:9.6.20
+    restart: on-failure
+    stop_grace_period: 1m
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: amboss-db
+    volumes:
+      - $APP_DATA_DIR/postgres:/var/lib/postgresql/data
+    networks:
+      default:
+        ipv4_address: $APP_AMBOSS_POSTGRES_IP
+
+  redis:
+    image: redis:6.0.9-alpine
+    restart: on-failure
+    stop_grace_period: 1m
+    volumes:
+      - $APP_DATA_DIR/redis:/data
+    networks:
+      default:
+        ipv4_address: $APP_AMBOSS_REDIS_IP
