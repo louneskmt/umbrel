@@ -36,11 +36,12 @@ services:
     restart: on-failure
     image: photoprism/photoprism:latest
     ports:
-      - 2342:2342 # [local port]:[container port]
+      - ${APP_PHOTOPRISM_PORT}:${APP_PHOTOPRISM_PORT} # [local port]:[container port]
     environment:
       PHOTOPRISM_ADMIN_PASSWORD: "moneyprintergobrrr"  # PLEASE CHANGE: Your initial admin password (min 4 characters)
       PHOTOPRISM_ORIGINALS_LIMIT: 5000                 # File size limit for originals in MB (increase for high-res video)
       PHOTOPRISM_HTTP_COMPRESSION: "gzip"              # Improves transfer speed and bandwidth utilization (none or gzip)
+      PHOTOPRISM_HTTP_PORT: "${APP_PHOTOPRISM_PORT}"
       PHOTOPRISM_DEBUG: "false"                        # Run in debug mode (shows additional log messages)
       PHOTOPRISM_PUBLIC: "false"                       # No authentication required (disables password protection)
       PHOTOPRISM_READONLY: "false"                     # Don't modify originals directory (reduced functionality)
@@ -53,11 +54,11 @@ services:
       PHOTOPRISM_UPLOAD_NSFW: "true"                   # Allow uploads that MAY be offensive
       # PHOTOPRISM_DATABASE_DRIVER: "sqlite"           # SQLite is an embedded database that doesn't require a server
       PHOTOPRISM_DATABASE_DRIVER: "mysql"              # Use MariaDB (or MySQL) instead of SQLite for improved performance
-      PHOTOPRISM_DATABASE_SERVER: "mariadb:3306" # MariaDB database server (hostname:port)
+      PHOTOPRISM_DATABASE_SERVER: "${APP_PHOTOPRISM_DB_IP}:3306" # MariaDB database server (hostname:port)
       PHOTOPRISM_DATABASE_NAME: "photoprism"           # MariaDB database schema name
       PHOTOPRISM_DATABASE_USER: "photoprism"           # MariaDB database user name
       PHOTOPRISM_DATABASE_PASSWORD: "hre6aErg"         # MariaDB database user password
-      PHOTOPRISM_SITE_URL: "http://localhost:2342/"    # Public PhotoPrism URL
+      PHOTOPRISM_SITE_URL: "http://localhost:${APP_PHOTOPRISM_PORT}/"    # Public PhotoPrism URL
       PHOTOPRISM_SITE_TITLE: "PhotoPrism"
       PHOTOPRISM_SITE_CAPTION: "Digital Asset Management"
       PHOTOPRISM_SITE_DESCRIPTION: ""
@@ -67,7 +68,7 @@ services:
       - "${APP_DATA_DIR}/storage:/photoprism/storage"
     networks:
       default:
-        ipv4_address: $APP_LIGHTNING_TERMINAL_IP
+        ipv4_address: ${APP_PHOTOPRISM_IP}
 
   mariadb:
     stop_grace_period: "1m"
@@ -83,4 +84,4 @@ services:
       MYSQL_PASSWORD: hre6aErg
     networks:
       default:
-        ipv4_address: $APP_LIGHTNING_TERMINAL_IP
+        ipv4_address: ${APP_PHOTOPRISM_DB_IP}
