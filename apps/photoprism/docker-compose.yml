@@ -24,12 +24,15 @@ version: "3.7"
 
 services:
   web:
-    user: "1000:1000"
-    stop_grace_period: "1m"
-    restart: on-failure
     image: photoprism/photoprism:latest
+    user: "1000:1000"
+    restart: on-failure
+    stop_grace_period: "1m"
     ports:
       - ${APP_PHOTOPRISM_PORT}:${APP_PHOTOPRISM_PORT}                 # [local port]:[container port]
+    volumes:
+      - "${APP_DATA_DIR}/originals:/photoprism/originals"
+      - "${APP_DATA_DIR}/storage:/photoprism/storage"
     environment:
       PHOTOPRISM_ADMIN_PASSWORD: "moneyprintergobrrr"                 # PLEASE CHANGE: Your initial admin password (min 4 characters)
       PHOTOPRISM_ORIGINALS_LIMIT: 5000                                # File size limit for originals in MB (increase for high-res video)
@@ -55,17 +58,14 @@ services:
       PHOTOPRISM_SITE_CAPTION: "Digital Asset Management"
       PHOTOPRISM_SITE_DESCRIPTION: ""
       PHOTOPRISM_SITE_AUTHOR: ""
-    volumes:
-      - "${APP_DATA_DIR}/originals:/photoprism/originals"
-      - "${APP_DATA_DIR}/storage:/photoprism/storage"
     networks:
       default:
         ipv4_address: ${APP_PHOTOPRISM_IP}
 
   db:
-    stop_grace_period: "1m"
-    restart: on-failure
     image: mariadb:10.5
+    restart: on-failure
+    stop_grace_period: "1m"
     command: mysqld --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=50
     volumes: # Don't remove permanent storage for index database files!
       - "${APP_DATA_DIR}/database:/var/lib/mysql"
