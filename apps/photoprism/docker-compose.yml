@@ -9,21 +9,21 @@ version: "3.7"
 # DOCKER COMPOSE COMMAND REFERENCE
 # ------------------------------------------------------------------
 # Logs     | ~/umbrel/scripts/app compose photoprism logs --tail=25 -f
-# Terminal | ~/umbrel/scripts/app compose photoprism exec photoprism bash
-# Help     | ~/umbrel/scripts/app compose photoprism exec photoprism photoprism help
-# Config   | ~/umbrel/scripts/app compose photoprism exec photoprism photoprism config
-# Reset    | ~/umbrel/scripts/app compose photoprism exec photoprism photoprism reset
-# Backup   | ~/umbrel/scripts/app compose photoprism exec photoprism photoprism backup -a -i
-# Restore  | ~/umbrel/scripts/app compose photoprism exec photoprism photoprism restore -a -i
-# Index    | ~/umbrel/scripts/app compose photoprism exec photoprism photoprism index
-# Reindex  | ~/umbrel/scripts/app compose photoprism exec photoprism photoprism index -a
-# Import   | ~/umbrel/scripts/app compose photoprism exec photoprism photoprism import
+# Terminal | ~/umbrel/scripts/app compose photoprism exec web bash
+# Help     | ~/umbrel/scripts/app compose photoprism exec web photoprism help
+# Config   | ~/umbrel/scripts/app compose photoprism exec web photoprism config
+# Reset    | ~/umbrel/scripts/app compose photoprism exec web photoprism reset
+# Backup   | ~/umbrel/scripts/app compose photoprism exec web photoprism backup -a -i
+# Restore  | ~/umbrel/scripts/app compose photoprism exec web photoprism restore -a -i
+# Index    | ~/umbrel/scripts/app compose photoprism exec web photoprism index
+# Reindex  | ~/umbrel/scripts/app compose photoprism exec web photoprism index -a
+# Import   | ~/umbrel/scripts/app compose photoprism exec web photoprism import
 # -------------------------------------------------------------------
 # Note: All commands may have to be prefixed with "sudo" when not running as root.
 #       This will change the home directory "~" to "/root" in your configuration.
 
 services:
-  photoprism:
+  web:
     user: "1000:1000"
     stop_grace_period: "1m"
     restart: on-failure
@@ -62,7 +62,7 @@ services:
       default:
         ipv4_address: ${APP_PHOTOPRISM_IP}
 
-  mariadb:
+  db:
     stop_grace_period: "1m"
     restart: on-failure
     image: mariadb:10.5
