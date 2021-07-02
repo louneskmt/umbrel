@@ -24,7 +24,10 @@ version: "3.7"
 
 services:
   web:
-    image: photoprism/photoprism:latest
+    # Change to fixed release once both AMD64 and ARM64 are available on the same repo
+    # Currently, there are two repo: photoprism and photoprism-arm64
+    # Umbrel needs both architecture on the same repository
+    image: photoprism/photoprism:preview@sha256:7fd6df5b78270d01299c1ce7dd8d4dc4de76540323a7c84f13e39cd48b12eac5
     user: "1000:1000"
     restart: on-failure
     stop_grace_period: "1m"
@@ -63,7 +66,7 @@ services:
         ipv4_address: ${APP_PHOTOPRISM_IP}
 
   db:
-    image: mariadb:10.5
+    image: mariadb:10.5.8@sha256:8040983db146f729749081c6b216a19d52e0973134e2e34c0b4fd87f48bc15b0
     restart: on-failure
     stop_grace_period: "1m"
     command: mysqld --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=50
